@@ -30,10 +30,10 @@
     <main>
 
         <div class="title">
-            <h1>회원가입</h1>
+            <h1>회원 정보 수정</h1>
         </div>
         <div class="wrap" id="join">
-            <form name="registFrm" id="registerForm" target="actionFrame" method="post" action="/member/register.do">
+            <form name="registFrm" id="registerForm" target="actionFrame" method="post" action="/member/update.do">
                 <div class="row">
                     <div class="sub-title-box">
                         <div class="sub-title">
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div>
-                        <input type="text" name="userid" id="userid" placeholder="아이디*" data-validation="[&#39;require&#39;, &#39;check&#39;]" data-type="userid" data-check="false">
+                        <input type="text" name="userid" id="userid" placeholder="아이디*" data-validation="[&#39;require&#39;, &#39;check&#39;]" data-type="userid" data-check="false" value="${member.userId }" readonly>
                         <p class="error"></p>
                     </div>
                     <div>
@@ -56,7 +56,7 @@
                 <div class="row">
                     <div>
                         <div class="flex">
-                            <select name="cellphone[]">
+                            <select name="cellphone[]" value="${member.choice1 }">
                                 <option value="010">010</option>
                                 <option value="011">011</option>
                                 <option value="016">016</option>
@@ -65,7 +65,7 @@
                                 <option value="070">070</option>
                                 <option value="080">080</option>
                             </select>
-                            <input type="tel" name="phone" placeholder="휴대폰 번호*" data-validation="require" data-type="verify">
+                            <input type="tel" name="phone" placeholder="휴대폰 번호*" data-validation="require" data-type="verify" value="${member.tel }">
 <!--                             <input type="tel" name="cellphone[]" placeholder="휴대폰 번호*" data-validation="require" data-type="verify"> -->
 <!--                             <button class="c-btn c-btn-grey" id="requestVerifyCode" type="button">인증번호 발송</button> -->
                         </div>
@@ -81,15 +81,15 @@
 <!--                         <p class="verify"></p> -->
 <!--                     </div> -->
                     <div>
-                        <input type="text" name="user_name" data-validation="require" placeholder="이름*" data-type="name">
+                        <input type="text" name="user_name" data-validation="require" placeholder="이름*" data-type="name" value="${member.userName }" readonly>
                         <p class="error"></p>
                     </div>
                     <div>
                         <div class="flex input-two">
-                            <input type="text" placeholder="이메일*" data-validation="require" data-type="email" name="email">
+                            <input type="text" placeholder="이메일*" data-validation="require" data-type="email" name="email" value="${member.email }">
 <!--                             <input type="text" placeholder="이메일*" data-validation="require" data-type="email" name="email[]"> -->
                             <span>@</span>
-                            <select name="email[]" id="email" data-validation="require" data-type="email">
+                            <select name="email[]" id="email" data-validation="require" data-type="email" value="${member.choice2 }">
                                 <option value="">Select</option>
                                 <option value="naver.com">naver.com</option>
                                 <option value="nate.com">nate.com</option>
@@ -120,70 +120,77 @@
                             추가 정보(선택)
                         </div>
                         <div class="flex">
+							<c:if test="${member.gender eq 'male'}">
                             <label class="label-radio">
-                                <input type="radio" name="sex" value="male">
+<%--                					<input type="hidden" id="member-gender" name="member-gender" value="${member.gender }"> --%>
+                                <input type="radio" name="gender" value="${member.gender }"  readonly>
+<!--                                 <input type="radio" name="sex" value="male"> -->
                                 <span>
                                 남자
                             </span>
                             </label>
+                            </c:if>
+                            <c:if test="${member.gender eq 'female'}">
                             <label class="label-radio">
-                                <input type="radio" name="sex" value="female">
+                                <input type="radio" name="gender" value="${member.gender }"  readonly>
+<%--                                 <input type="radio" name="sex" value="female"> --%>
                                 <span>
                                 여자
-                            </span>
+                            	</span>
                             </label>
+                           	</c:if>
                         </div>
                     </div>
                     <div>
                         <div class="flex">
                             <div class="input-ab">
-                                <input type="text" data-input-type="number" name="label[1][value][]">
+                                <input type="text" data-input-type="number" name="label[1][value][]" value="${member.height }">
                                 <span>cm</span>
                             </div>
                             <div class="input-ab">
-                                <input type="text" data-input-type="number" name="label[3][value][]">
+                                <input type="text" data-input-type="number" name="label[3][value][]" value="${member.weight }">
                                 <span>kg</span>
                             </div>
                             <div class="input-ab">
-                                <input type="text" data-input-type="number" name="label[9][value][]">
+                                <input type="text" data-input-type="number" name="label[9][value][]" value="${member.footSize }">
                                 <span>mm</span>
                             </div>
                         </div>
                     </div>
                 </div>
+<!--                 <div class="row"> -->
+<!--                     <p class="title">이용약관</p> -->
+<!--                     <ul class="list-agreement"> -->
+<!--                         <li> -->
+<!--                             <label for="agreement" class="checkbox"> -->
+<!--                                 <input type="checkbox" id="agreement" name="agreement" data-validation="require" data-type="agreement" value="Y"> -->
+<!--                                 <span class="box"></span> -->
+<!--                                 <span> -->
+<!--                                 <span class="link" data-modal-event="open" data-modal-id="modal_agreement">이용약관</span>&nbsp;및&nbsp;<span class="link" data-modal-event="open" data-modal-id="modal_privacy">개인정보</span>&nbsp;처리방침에 동의하십니까?(필수) -->
+<!--                             </span> -->
+<!--                             </label> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <label for="newsletter" class="checkbox"> -->
+<!--                                 <input type="checkbox" id="newsletter" name="newsletter" value="Y"> -->
+<!--                                 <span class="box"></span> -->
+<!--                                 OpentheWardrobe의 프로모션 정보를 받고 싶습니다!(선택) -->
+<!--                             </label> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <label for="allAgree" class="checkbox"> -->
+<!--                                 <input type="checkbox" id="allAgree"> -->
+<!--                                 <span class="box"></span> -->
+<!--                                 전체 동의 -->
+<!--                             </label> -->
+<!--                         </li> -->
+<!--                     </ul> -->
+<!--                     <div> -->
+<!--                         <p class="error"></p> -->
+<!--                     </div> -->
+<!--                 </div> -->
                 <div class="row">
-                    <p class="title">이용약관</p>
-                    <ul class="list-agreement">
-                        <li>
-                            <label for="agreement" class="checkbox">
-                                <input type="checkbox" id="agreement" name="agreement" data-validation="require" data-type="agreement" value="Y">
-                                <span class="box"></span>
-                                <span>
-                                <span class="link" data-modal-event="open" data-modal-id="modal_agreement">이용약관</span>&nbsp;및&nbsp;<span class="link" data-modal-event="open" data-modal-id="modal_privacy">개인정보</span>&nbsp;처리방침에 동의하십니까?(필수)
-                            </span>
-                            </label>
-                        </li>
-                        <li>
-                            <label for="newsletter" class="checkbox">
-                                <input type="checkbox" id="newsletter" name="newsletter" value="Y">
-                                <span class="box"></span>
-                                OpentheWardrobe의 프로모션 정보를 받고 싶습니다!(선택)
-                            </label>
-                        </li>
-                        <li>
-                            <label for="allAgree" class="checkbox">
-                                <input type="checkbox" id="allAgree">
-                                <span class="box"></span>
-                                전체 동의
-                            </label>
-                        </li>
-                    </ul>
-                    <div>
-                        <p class="error"></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <button class="c-btn c-btn-black c-btn-bold" type="submit" id="registerBtn">회원가입</button>
+                    <button class="c-btn c-btn-black c-btn-bold" type="submit" id="registerBtn">수정하기</button>
                 </div>
             </form>
         </div>

@@ -2,7 +2,6 @@ package open.the.wardrobe.member.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,17 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import open.the.wardrobe.member.model.service.MemberService;
 import open.the.wardrobe.member.model.vo.Member;
 
+
 /**
- * Servlet implementation class RegisterController
+ * Servlet implementation class UpdateServlet
  */
-@WebServlet("/member/register.do")
-public class RegisterController extends HttpServlet {
+@WebServlet("/member/update.do")
+public class UpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterController() {
+    public UpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,8 +31,8 @@ public class RegisterController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/member/register.jsp");
-		view.forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -40,35 +40,31 @@ public class RegisterController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8"); // 한글아 깨지지마!~
 		String userId = request.getParameter("userid");
 		String password = request.getParameter("password");
 		String choice1 = request.getParameter("cellphone[]");
 		String tel = request.getParameter("phone");
-		String userName = request.getParameter("user_name");
+		String userName = request.getParameter("userName");
 		String email = request.getParameter("email");
 		String choice2 = request.getParameter("email[]");
-		String gender = request.getParameter("gender");
+		String gender = request.getParameter("member-gender");
 		String height = request.getParameter("label[1][value][]");
 		String weight = request.getParameter("label[3][value][]");
 		String footSize = request.getParameter("label[9][value][]");
-
-		Member member = new Member(userId, password, choice1, tel, userName
-				, email, choice2, gender, height, weight, footSize);
-		// 서비스 호출
+		// UPDATE MEMBER_TBL SET MEMBER_PW = ?, MEMBER_EMAIL = ?, MEMBER_PHONE = ?, MEMBER_ADDRESS = ?, MEMBER_HOBBY = ?, UPDATE_DATE = SYSDATE WHERE MEMBER_ID = ?
 		MemberService service = new MemberService();
-		
-		int result = service.insertMember(member);
+//		Member member = new Member(memberId, memberPw, memberEmail, memberPhone, memberAddress, memberHobby);
+		Member member = new Member(userId, password, choice1, tel, userName, email, choice2, gender, height, weight, footSize);
+//		int result = service.updateMember(memberId, memberPw, memberEmail, memberPhone, memberAddress, memberHobby);
+		int result = service.updateMember(member);
 		if(result > 0) {
-			//성공
-			request.setAttribute("msg", "회원가입 성공했습니다.");
-			request.setAttribute("url", "/main/main.jsp");
-			request.getRequestDispatcher("/WEB-INF/views/common/serviceSuccess.jsp")
-			.forward(request, response);
+			// 성공(하면 메인페이지)
+			response.sendRedirect("/main/main.jsp");
 		}else {
-			//실패
-			request.getRequestDispatcher("/WEB-INF/views/common/serviceFailed.jsp")
-			.forward(request, response);
+			// 실패(하면 에러페이지)
+			request.setAttribute("msg", "회원 수정이 완료되지 않았습니다.");
+			request.getRequestDispatcher("/member/serviceFailed.jsp").forward(request, response);
 		}
 	}
 

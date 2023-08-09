@@ -8,5 +8,9 @@
 	</head>
 	<body>
 		<h1>서비스 결과 실패!</h1>
+		<script>
+			const result = '${msg }';
+			alert(result);
+		</script>
 	</body>
 </html>

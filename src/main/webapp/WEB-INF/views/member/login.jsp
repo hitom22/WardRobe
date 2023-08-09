@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,15 +25,36 @@
 
     <main>
 
-        <div class="title">
-            <h1>로그인</h1>
-        </div>
+<!--         <div class="title"> -->
+<!--             <h1>로그인</h1> -->
+<!--         </div> -->
         <div id="member-login" class="loginTabContetns resp_login_wrap resp_account_wrap Mt0">
-            <form name="loginForm" target="actionFrame" method="post" action="" onsubmit="return submitLoginForm(this)">
+            <form name="loginForm" target="actionFrame" method="post" action="/member/login.do" onsubmit="return submitLoginForm(this)">
                 <input type="hidden" name="return_url" value="/goods/view?no=1042111">
                 <input type="hidden" name="order_auth" value="0">
                 <input type="hidden" name="user_agent" value="browser" id="userAgent">
                 <input type="hidden" name="token" value="" id="token">
+                
+       		<c:if test="${sessionScope.userid ne null }">
+        	<div class="title">
+           		<h1>마이페이지</h1>
+				<h3>${sessionScope.userid }님 환영합니다!</h3> 
+        	</div>
+		  		<li>
+                  <div class="c-btn-group">
+					<a href="/member/myInfo.do?userId=${sessionScope.userid }"  class="c-btn c-btn-white" designelement="text">회원정보수정</a>                  
+                  </div>
+                  <div class="c-btn-group">
+                  	<a href="/member/logout.do" class="c-btn c-btn-black" designelement="text">로그아웃</a>                  
+				  </div>
+                </li>
+<%-- 				<a href="/member/myInfo.do?userId=${sessionScope.userid }">회원정보수정</a> --%>
+			</c:if>
+			
+            <c:if test="${sessionScope.userid eq null }">
+            <div class="title">
+            	<h1>로그인</h1>
+        	</div>
                 <fieldset>
                     <ul class="login_real_area">
                         <li class="input_area">
@@ -59,11 +82,15 @@
                             </div>
                         </li>
                         <li>
+<!--                             <div class="c-btn-group"> -->
+<!--                                 <button type="submit" class="c-btn c-btn-black"><span designelement="text" textindex="1" texttemplatepath="cmVzcG9uc2l2ZV92ZXIxX2RlZmF1bHRfZ2wvbWVtYmVyL2plbnRlL2xvZ2luLmh0bWw=">로그인</span></button> -->
+<!--                             </div> -->
                             <div class="c-btn-group">
                                 <button type="submit" class="c-btn c-btn-black"><span designelement="text" textindex="1" texttemplatepath="cmVzcG9uc2l2ZV92ZXIxX2RlZmF1bHRfZ2wvbWVtYmVyL2plbnRlL2xvZ2luLmh0bWw=">로그인</span></button>
                             </div>
                             <div class="c-btn-group">
-                                <a href="../login/register.html" class="c-btn c-btn-white" designelement="text" textindex="2" texttemplatepath="cmVzcG9uc2l2ZV92ZXIxX2RlZmF1bHRfZ2wvbWVtYmVyL2plbnRlL2xvZ2luLmh0bWw=">회원가입</a>
+<!--                                 <a href="/member/register.do" class="c-btn c-btn-white"><span designelement="text" textindex="2" texttemplatepath="cmVzcG9uc2l2ZV92ZXIxX2RlZmF1bHRfZ2wvbWVtYmVyL2plbnRlL2xvZ2luLmh0bWw=">회원가입</a> -->
+                                <a href="/member/register.do" class="c-btn c-btn-white"><span designelement="text" textindex="2" texttemplatepath="cmVzcG9uc2l2ZV92ZXIxX2RlZmF1bHRfZ2wvbWVtYmVyL2plbnRlL2xvZ2luLmh0bWw=">회원가입</a>
                             </div>
                         </li>
                         <li class="find_join">
@@ -76,6 +103,7 @@
                         </li>
                     </ul>
                 </fieldset>
+                </c:if>
             </form>
         </div>
 

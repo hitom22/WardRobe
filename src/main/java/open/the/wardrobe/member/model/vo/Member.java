@@ -1,4 +1,4 @@
-package open.the.wardrobe.model.vo;
+package open.the.wardrobe.member.model.vo;
 
 import java.sql.Timestamp;
 
@@ -36,6 +36,12 @@ public class Member {
 		this.height = height;
 		this.weight = weight;
 		this.footSize = footSize;
+	}
+
+	public Member(String userId, String password) {
+		super();
+		this.userId = userId;
+		this.password = password;
 	}
 
 

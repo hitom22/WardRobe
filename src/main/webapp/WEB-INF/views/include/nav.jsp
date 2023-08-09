@@ -38,7 +38,7 @@
                 </div>
             </nav>
             <div class="list right">
-            	<c:if test="${sessionScope.memberId eq null }">
+            	<c:if test="${sessionScope.userid eq null }">
 	                <div class="list__item" id="search">
 	                    <a href="/member/register.do">회원가입</a>
 	                </div>
@@ -46,12 +46,12 @@
 	                    <a href="/member/login.do">로그인</a>
 	                </div>
                 </c:if>
-                <c:if test="${sessionScope.memberId ne null }">
+                <c:if test="${sessionScope.userid ne null }">
 	                <div class="list__item" id="search">
-	                    <a href="/member/register.do">마이페이지</a>
+	                    <a href="/member/login.do">마이페이지</a>
 	                </div>
 	                <div class="list__item">
-	                    <a href="/member/login.do">로그아웃</a>
+	                    <a href="/member/logout.do">로그아웃</a>
 	                </div>
                 </c:if>
                 <div class="list__item">
